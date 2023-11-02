@@ -1,4 +1,11 @@
+### Flask template
+instance/*
+!instance/.gitignore
+.webassets-cache
+__pycache__/
+flask_session/
 .env
-venv/
+### Custom
 .idea/
+venv/
 faze/
