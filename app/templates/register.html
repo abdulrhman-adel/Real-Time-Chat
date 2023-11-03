@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<body class="bg-violet-100/30 dark:bg-zinc-700">
+
+    <div class="w-full h-full">
+        <div class="px-5 py-24 sm:px-24 lg:px-0">
+            <div class="grid items-center justify-center grid-cols-1 lg:grid-cols-12 auth-bg">
+                <div class="mx-5 lg:col-start-5 lg:col-span-4">
+                    <div class="text-center">
+                        <a href="/" class="block mb-10">
+                            <img src="assets/images/logo-dark.png" alt="" class="block h-8 mx-auto dark:hidden">
+                            <img src="assets/images/logo-light.png" alt="" class="hidden h-8 mx-auto logo-light dark:block">
+                        </a>
+
+                        <h4 class="mb-2 text-gray-800 text-21 dark:text-gray-50">Sign up</h4>
+                        <p class="mb-6 text-gray-500 dark:text-gray-300">Get your Nova account now.</p>
+                    </div>
+                    <div class="bg-white card dark:bg-zinc-800 dark:border-transparent">
+                        <div class="p-5">
+                            <div class="p-4">
+                                {% with messages = get_flashed_messages(with_categories=true) %}
+                                  {% if messages %}
+                                      {% for category, message in messages %}
+                                          <span style="color: red;">[{{ message }}] [{{ category }}]</span>
+                                      {% endfor %}
+                                  {% endif %}
+                                {% endwith %}
+                                <form action="{{ url_for('register')}}" method="POST">
+                                    {{ form.csrf_token }}
+                                    {% set input_class = 'w-full border-gray-100 rounded rounded-l-none placeholder:text-14 bg-slate-50/50 text-14 focus:ring-0 dark:bg-zinc-700 dark:border-zinc-600 dark:text-gray-200' %}
+
+                                     <div class="mb-5">
+                                        <label class="font-medium text-gray-700 dark:text-gray-200">Username</label>
+                                        <div class="flex items-center mt-2 mb-3 rounded-3 bg-slate-50/50 dark:bg-transparent">
+                                            <span class="flex items-center px-4 py-2 text-gray-500 border border-r-0 border-gray-100 rounded rounded-r-none dark:border-zinc-600" id="basic-addon3">
+                                                <i class="ri-user-2-line text-16"></i>
+                                            </span>
+                                            <input type="text" name="username" class="{{ input_class }}" placeholder="Enter Username" aria-label="Enter Username" aria-describedby="basic-addon3">
+                                        </div>
+                                          {% for error in form.username.errors %}
+                                              <span style="color: red;">[{{ error }}]</span>
+                                          {% endfor %}
+                                    </div>
+
+                                    <div class="mb-5">
+                                        <label class="font-medium text-gray-700 dark:text-gray-200">Email</label>
+                                        <div class="flex items-center mt-2 mb-3 rounded-3 bg-slate-50/50 dark:bg-transparent">
+                                            <span class="flex items-center px-4 py-2 text-gray-500 border border-r-0 border-gray-100 rounded rounded-r-none dark:border-zinc-600" id="basic-addon3">
+                                                <i class="ri-mail-line text-16"></i>
+                                            </span>
+                                            <input type="text" name="email" class="{{ input_class }}" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="basic-addon3">
+                                        </div>
+                                         {% for error in form.email.errors %}
+                                            <span style="color: red;">[{{ error }}]</span>
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="mb-6">
+                                        <label class="font-medium text-gray-700 dark:text-gray-200">Password</label>
+                                        <div class="flex items-center mt-2 mb-3 rounded-3 bg-slate-50/50 dark:bg-transparent">
+                                            <span class="flex items-center px-4 py-2 text-gray-500 border border-r-0 border-gray-100 rounded rounded-r-none dark:border-zinc-600" id="basic-addon4">
+                                                <i class="ri-lock-2-line text-16"></i>
+                                            </span>
+                                            <input type="password" name="password" class="{{ input_class }}" placeholder="Enter Password" aria-label="Enter Password" aria-describedby="basic-addon4">
+                                             {% for error in form.password.errors %}
+                                                <span style="color: red;">[{{ error }}]</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-6">
+                                        <label class="font-medium text-gray-700 dark:text-gray-200">Confirm Password</label>
+                                        <div class="flex items-center mt-2 mb-3 rounded-3 bg-slate-50/50 dark:bg-transparent">
+                                            <span class="flex items-center px-4 py-2 text-gray-500 border border-r-0 border-gray-100 rounded rounded-r-none dark:border-zinc-600" id="basic-addon4">
+                                                <i class="ri-lock-2-line text-16"></i>
+                                            </span>
+                                            <input type="password" name="confirm" class="{{ input_class }}" placeholder="Enter Password" aria-label="Enter Password" aria-describedby="basic-addon4">
+                                             {% for error in form.confirm.errors %}
+                                                <span style="color: red;">[{{ error }}]</span>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+
+                                    <div class="grid">
+                                        <button class="py-2 text-white border-transparent btn bg-violet-500 hover:bg-violet-600 text-16" type="submit">Sign up</button>
+                                    </div>
+
+                                    <div class="mt-5 text-center">
+                                        <p class="mb-0 text-gray-500 dark:text-gray-300">By registering you agree to the Nova <a href="#" class="text-violet-500">Terms of Use</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 text-center">
+                        <p class="mb-5 text-gray-700 dark:text-gray-200">You have an account ? <a href="/login" class="fw-medium text-violet-500"> Login </a> </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

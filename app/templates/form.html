@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Form{% endblock %}
+
+{% block content %}
+    <h1>Form Test</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              <span style="color: red;">[{{ message }}] [{{ category }}]</span>
+          {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <form action="{{ url_for('form') }}" method="POST">
+        {{ form.csrf_token }}
+        {{ form.username.label }} {{ form.username(size=20) }}
+        {% for error in form.username.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        <br>
+        {{ form.email.label }} {{ form.email(size=20) }}
+        {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        <br>
+        {{ form.password.label }} {{ form.password(size=20) }}
+        {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        <br>
+        {{ form.confirm.label }} {{ form.confirm(size=20) }}
+        {% for error in form.confirm.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+<br>
+        {{ form.submit()}}
+
+    </form>
+{% endblock %}

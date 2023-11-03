@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="group" data-theme-color="violet" data-mode="light">
+
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %} | Nova</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="shortcut icon" href="assets/images/favicon.ico" />
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/tailwind2.css') }}">
+</head>
+
+
+
+    {% block content %}
+    {% endblock %}
+
+<script src="{{ url_for('static',filename='libs/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static',filename='libs/%40popperjs/core/umd/popper.min.js') }}"></script>
+<script src="{{ url_for('static',filename='libs/simplebar/simplebar.min.js') }}"></script>
+<!-- Magnific Popup-->
+<script src="{{ url_for('static',filename='libs/magnific-popup/jquery.magnific-popup.min.js') }}"></script>
+
+<!-- owl.carousel js -->
+<script src="{{ url_for('static',filename='libs/owl.carousel/owl.carousel.min.js') }}"></script>
+
+<!-- page init -->
+<script src="{{ url_for('static',filename='js/pages/index.init.js') }}"></script>
+
+<script src="{{ url_for('static',filename='js/pages/profile.init.js') }}"></script>
+
+<script src="{{ url_for('static',filename='js/app.js') }}"></script>
+</body>
+
+</html>
