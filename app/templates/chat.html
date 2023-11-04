@@ -4,16 +4,17 @@
 
 {% block content %}
 <body>
-                                {% with messages = get_flashed_messages(with_categories=true) %}
-                                  {% if messages %}
-                                      {% for category, message in messages %}
-                                          <span style="color: red;">[{{ message }}] [{{ category }}]</span>
-                                      {% endfor %}
-                                  {% endif %}
-                                {% endwith %}
+     {% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+             {% for category, message in messages %}
+                 <span style="color: red;">[{{ message }}] [{{ category }}]</span>
+             {% endfor %}
+         {% endif %}
+     {% endwith %}
+
     <div class="lg:flex">
         <!-- Start left sidebar-menu -->
-        <div class="sidebar-menu w-full lg:w-[75px] shadow lg:flex lg:flex-col flex flex-row justify-between items-center fixed lg:relative z-40 bottom-0 bg-white dark:bg-zinc-600 ">
+        <div class="lg:max-h-screen sidebar-menu w-full lg:w-[75px] shadow lg:flex lg:flex-col flex flex-row justify-between items-center fixed lg:relative z-40 bottom-0 bg-white dark:bg-zinc-600 ">
             <div class="hidden lg:my-5 lg:block">
                 <a href="index.html" class="block dark:hidden">
                     <span>
@@ -142,12 +143,8 @@
                 </div>
             </div>
         </div>
-        <!-- light-dark mode button -->
-        <a href="javascript: void(0);" onclick="toggleSwitcher()" class="fixed z-50 flex-col gap-3 px-4 py-3 ltr:right-0 rtl:left-0 font-normal text-white group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=green]:bg-green-500 top-[44%] text-14 ltr:rounded-l rtl:rounded-r hidden lg:block">
-            <i class="text-xl mdi mdi-cog mdi-spin"></i>
-        </a>
         <!-- start chat-leftsidebar -->
-        <div class="chat-leftsidebar lg:w-[380px] group-data-[theme-color=violet]:bg-slate-50 group-data-[theme-color=green]:bg-green-50/20 group-data-[theme-color=red]:bg-red-50/20 shadow overflow-y-hidden mb-[80px] lg:mb-0 group-data-[theme-color=violet]:dark:bg-zinc-700 group-data-[theme-color=green]:dark:bg-zinc-700 group-data-[theme-color=red]:dark:bg-zinc-700">
+        <div class="lg:max-h-screen  chat-leftsidebar lg:w-[380px] group-data-[theme-color=violet]:bg-slate-50 group-data-[theme-color=green]:bg-green-50/20 group-data-[theme-color=red]:bg-red-50/20 shadow overflow-y-hidden mb-[80px] lg:mb-0 group-data-[theme-color=violet]:dark:bg-zinc-700 group-data-[theme-color=green]:dark:bg-zinc-700 group-data-[theme-color=red]:dark:bg-zinc-700">
             <div>
                 <!-- Start Profile tab-pane -->
                 <div class="tab-content">
@@ -178,7 +175,7 @@
                                 <img src="assets/images/avatar-1.jpg" class="w-24 h-24 p-1 mx-auto border border-gray-100 rounded-full dark:border-zinc-800" alt="">
                             </div>
 
-                            <h5 class="mb-1 text-16 dark:text-gray-50">Patricia Smith</h5>
+                            <h5 class="mb-1 text-16 dark:text-gray-50">{{ username }}</h5>
 
                             <h5 class="mb-0 truncate text-14 ltr:block rtl:hidden"><a href="#" class="text-gray-500 dark:text-gray-50"><i class="text-green-500 ltr:ml-1 rtl:mr-1 ri-record-circle-fill text-10 "></i> Active</a></h5>
                             <h5 class="mb-0 truncate text-14 ltr:hidden rtl:block"><a href="#" class="text-gray-500 dark:text-gray-50">Active <i class="text-green-500 ltr:ml-1 rtl:mr-1 ri-record-circle-fill text-10 "></i></a></h5>
@@ -209,7 +206,7 @@
                                         <div class="p-5">
                                             <div>
                                                 <p class="mb-1 text-gray-500 dark:text-gray-300">Name</p>
-                                                <h5 class="text-sm dark:text-gray-50">Patricia Smith</h5>
+                                                <h5 class="text-sm dark:text-gray-50">{{ username }}</h5>
                                             </div>
                                             <div class="mt-5">
                                                 <p class="mb-1 text-gray-500 dark:text-gray-300">Email</p>
@@ -988,108 +985,24 @@
 
 
                                 <ul>
-                                    <li class="px-5 py-[15px] group-data-[theme-color=violet]:hover:bg-slate-100 group-data-[theme-color=green]:hover:bg-green-50/50 group-data-[theme-color=red]:hover:bg-red-50/50 group-data-[theme-color=violet]:dark:hover:bg-zinc-600 group-data-[theme-color=green]:dark:hover:bg-zinc-600 group-data-[theme-color=red]:dark:hover:bg-zinc-600 transition-all ease-in-out rounded">
-                                        <a href="#">
-                                            <div class="flex items-center">
-                                                <div class="ltr:mr-5 rtl:ml-5">
-                                                    <div class="flex items-center justify-center rounded-full w-9 h-9 group-data-[theme-color=violet]:bg-violet-500/20 group-data-[theme-color=green]:bg-green-500/20 group-data-[theme-color=red]:bg-red-500/20">
-                                                        <span class="font-medium group-data-[theme-color=violet]:text-violet-500 group-data-[theme-color=green]:text-green-500 group-data-[theme-color=red]:text-red-500">
-                                                            G
-                                                        </span>
+                                    {% for room in rooms %}
+                                        <li class="px-5 py-[15px] group-data-[theme-color=violet]:hover:bg-slate-100 group-data-[theme-color=green]:hover:bg-green-50/50 group-data-[theme-color=red]:hover:bg-red-50/50 group-data-[theme-color=violet]:dark:hover:bg-zinc-600 group-data-[theme-color=green]:dark:hover:bg-zinc-600 group-data-[theme-color=red]:dark:hover:bg-zinc-600 transition-all ease-in-out rounded">
+                                            <a  class="RoomSelection" href="#">
+                                                <div class="flex items-center">
+                                                    <div class="ltr:mr-5 rtl:ml-5">
+                                                        <div class="flex items-center justify-center rounded-full w-9 h-9 group-data-[theme-color=violet]:bg-violet-500/20 group-data-[theme-color=green]:bg-green-500/20 group-data-[theme-color=red]:bg-red-500/20">
+                                                            <span class="font-medium group-data-[theme-color=violet]:text-violet-500 group-data-[theme-color=green]:text-green-500 group-data-[theme-color=red]:text-red-500">
+                                                                {{ room[0]|upper }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow overflow-hidden">
+                                                        <h5 class=" mb-0 text-gray-700 truncate text-14 dark:text-gray-50">#{{ room | title }}</h5>
                                                     </div>
                                                 </div>
-                                                <div class="flex-grow overflow-hidden">
-                                                    <h5 class="mb-0 text-gray-700 truncate text-14 dark:text-gray-50">#General</h5>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="px-5 py-[15px] group-data-[theme-color=violet]:hover:bg-slate-100 group-data-[theme-color=green]:hover:bg-green-50/50 group-data-[theme-color=red]:hover:bg-red-50/50 group-data-[theme-color=violet]:dark:hover:bg-zinc-600 group-data-[theme-color=green]:dark:hover:bg-zinc-600 group-data-[theme-color=red]:dark:hover:bg-zinc-600 transition-all ease-in-out rounded">
-                                        <a href="#">
-                                            <div class="flex items-center">
-                                                <div class="ltr:mr-5 rtl:ml-5">
-                                                    <div class="flex items-center justify-center rounded-full w-9 h-9 group-data-[theme-color=violet]:bg-violet-500/20 group-data-[theme-color=green]:bg-green-500/20 group-data-[theme-color=red]:bg-red-500/20">
-                                                        <span class="font-medium group-data-[theme-color=violet]:text-violet-500 group-data-[theme-color=green]:text-green-500 group-data-[theme-color=red]:text-red-500">
-                                                            R
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow overflow-hidden">
-                                                    <h5 class="mb-0 text-gray-700 truncate text-14 dark:text-gray-50">#Reporting <span class="rtl:float-left ltr:float-right px-1.5 py-0.5 text-red-500 rounded-full bg-red-500/20 text-11">+23</span></h5>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="px-5 py-[15px] group-data-[theme-color=violet]:hover:bg-slate-100 group-data-[theme-color=green]:hover:bg-green-50/50 group-data-[theme-color=red]:hover:bg-red-50/50 group-data-[theme-color=violet]:dark:hover:bg-zinc-600 group-data-[theme-color=green]:dark:hover:bg-zinc-600 group-data-[theme-color=red]:dark:hover:bg-zinc-600 transition-all ease-in-out rounded">
-                                        <a href="#">
-                                            <div class="flex items-center">
-                                                <div class="ltr:mr-5 rtl:ml-5">
-                                                    <div class="flex items-center justify-center rounded-full w-9 h-9 group-data-[theme-color=violet]:bg-violet-500/20 group-data-[theme-color=green]:bg-green-500/20 group-data-[theme-color=red]:bg-red-500/20">
-                                                        <span class="font-medium group-data-[theme-color=violet]:text-violet-500 group-data-[theme-color=green]:text-green-500 group-data-[theme-color=red]:text-red-500">
-                                                            D
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow overflow-hidden">
-                                                    <h5 class="mb-0 text-gray-700 truncate text-14 dark:text-gray-50">#Designers</h5>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="px-5 py-[15px] group-data-[theme-color=violet]:hover:bg-slate-100 group-data-[theme-color=green]:hover:bg-green-50/50 group-data-[theme-color=red]:hover:bg-red-50/50 group-data-[theme-color=violet]:dark:hover:bg-zinc-600 group-data-[theme-color=green]:dark:hover:bg-zinc-600 group-data-[theme-color=red]:dark:hover:bg-zinc-600 transition-all ease-in-out rounded">
-                                        <a href="#">
-                                            <div class="flex items-center">
-                                                <div class="ltr:mr-5 rtl:ml-5">
-                                                    <div class="flex items-center justify-center rounded-full w-9 h-9 group-data-[theme-color=violet]:bg-violet-500/20 group-data-[theme-color=green]:bg-green-500/20 group-data-[theme-color=red]:bg-red-500/20">
-                                                        <span class="font-medium group-data-[theme-color=violet]:text-violet-500 group-data-[theme-color=green]:text-green-500 group-data-[theme-color=red]:text-red-500">
-                                                            D
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow overflow-hidden">
-                                                    <h5 class="mb-0 text-gray-700 truncate text-14 dark:text-gray-50">#Developers <span class="rtl:float-left ltr:float-right px-1.5 py-0.5 text-red-500 rounded-full bg-red-500/20 text-11">New</span></h5>
-                                                </div>
-                                            </div>
-
-                                        </a>
-                                    </li>
-
-                                    <li class="px-5 py-[15px] group-data-[theme-color=violet]:hover:bg-slate-100 group-data-[theme-color=green]:hover:bg-green-50/50 group-data-[theme-color=red]:hover:bg-red-50/50 group-data-[theme-color=violet]:dark:hover:bg-zinc-600 group-data-[theme-color=green]:dark:hover:bg-zinc-600 group-data-[theme-color=red]:dark:hover:bg-zinc-600 transition-all ease-in-out rounded">
-                                        <a href="#">
-                                            <div class="flex items-center">
-                                                <div class="ltr:mr-5 rtl:ml-5">
-                                                    <div class="flex items-center justify-center rounded-full w-9 h-9 group-data-[theme-color=violet]:bg-violet-500/20 group-data-[theme-color=green]:bg-green-500/20 group-data-[theme-color=red]:bg-red-500/20">
-                                                        <span class="font-medium group-data-[theme-color=violet]:text-violet-500 group-data-[theme-color=green]:text-green-500 group-data-[theme-color=red]:text-red-500">
-                                                            P
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow overflow-hidden">
-                                                    <h5 class="mb-0 text-gray-700 truncate text-14 dark:text-gray-50">#Project-alpha</h5>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="px-5 py-[15px] group-data-[theme-color=violet]:hover:bg-slate-100 group-data-[theme-color=green]:hover:bg-green-50/50 group-data-[theme-color=red]:hover:bg-red-50/50 group-data-[theme-color=violet]:dark:hover:bg-zinc-600 group-data-[theme-color=green]:dark:hover:bg-zinc-600 group-data-[theme-color=red]:dark:hover:bg-zinc-600 transition-all ease-in-out rounded">
-                                        <a href="#">
-                                            <div class="flex items-center">
-                                                <div class="ltr:mr-5 rtl:ml-5">
-                                                    <div class="flex items-center justify-center rounded-full w-9 h-9 group-data-[theme-color=violet]:bg-violet-500/20 group-data-[theme-color=green]:bg-green-500/20 group-data-[theme-color=red]:bg-red-500/20">
-                                                        <span class="font-medium group-data-[theme-color=violet]:text-violet-500 group-data-[theme-color=green]:text-green-500 group-data-[theme-color=red]:text-red-500">
-                                                            B
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-grow overflow-hidden">
-                                                    <h5 class="mb-0 text-gray-700 truncate text-14 dark:text-gray-50">#Snacks</h5>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
                                 </ul>
                             </div>
                             <!-- End chat-group-list -->
@@ -1688,7 +1601,7 @@
                                 </a>
                             </div>
 
-                            <h5 class="mb-1 text-16 dark:text-gray-50">Patricia Smith</h5>
+                            <h5 class="mb-1 text-16 dark:text-gray-50">{{ username }}</h5>
 
                             <div class="relative mb-1 dropdown">
                                 <a class="pb-1 text-gray-500 dropdown-toggle d-block dark:text-gray-300" href="#" role="button" data-bs-toggle="dropdown" id="dropdownMenuButtonX">
@@ -1724,7 +1637,7 @@
                                                     <button type="button" class="py-1.5 btn bg-slate-100 border-transparent rounded hover:bg-gray-50 transition-all ease-in-out dark:bg-zinc-600 dark:text-gray-50 dark:hover:bg-zinc-500/50"><i class="mr-1 align-middle ri-edit-fill"></i> Edit</button>
                                                 </div>
                                                 <p class="mb-1 text-gray-500 dark:text-gray-300">Name</p>
-                                                <h5 class="text-sm dark:text-gray-50">Patricia Smith</h5>
+                                                <h5 class="text-sm dark:text-gray-50">{{ username }}</h5>
                                             </div>
                                             <div class="mt-5">
                                                 <p class="mb-1 text-gray-500 dark:text-gray-300">Email</p>
@@ -1913,13 +1826,15 @@
         <!-- end chat-leftsidebar -->
 
         <!-- Start User chat -->
-        <div class="w-full overflow-hidden transition-all duration-150 bg-white user-chat dark:bg-zinc-800">
+        <div class="lg:max-h-screen w-full overflow-hidden transition-all duration-150 bg-white user-chat dark:bg-zinc-800">
 
 
             <div class="lg:flex">
-                <!-- start chat conversation section -->
+                <!-- start Chat  -->
 
                 <div class="relative w-full overflow-hidden ">
+
+                    <!-- start Chat Header -->
                     <div class="p-4 border-b border-gray-100 lg:p-6 dark:border-zinc-600">
                         <div class="grid items-center grid-cols-12">
                             <div class="col-span-8 sm:col-span-4">
@@ -1936,6 +1851,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-span-4 sm:col-span-8">
                                 <ul class="flex items-center justify-end lg:gap-4">
                                     <li class="px-3">
@@ -2088,10 +2004,11 @@
                     </div>
                     <!-- end chat user head -->
 
-                    <!-- start chat conversation -->
+                    <!-- start Conversation -->
                     <div class="h-[80vh] p-4 lg:p-6" data-simplebar>
 
-                        <ul class="mb-0">
+                        <ul class="mb-0" id="MainConversation">
+                             <!-- request Text box -->
                             <li class="clear-both py-4">
                                 <div class="flex items-end gap-3">
                                     <div>
@@ -2123,48 +2040,14 @@
                                     </div>
                                 </div>
                             </li>
-
-                            <li class="clear-both py-4">
-                                <div class="relative inline-flex items-end mb-6 text-right ltr:rtl:float-left ltr:float-right rtl:float-left">
-                                    <div class="order-3 mr-0 ltr:ml-4 rtl:mr-4">
-                                        <img src="assets/images/avatar-1.jpg" alt="" class="rounded-full h-9 w-9">
-                                    </div>
-
-                                    <div>
-                                        <div class="flex gap-2 mb-2 ltr:justify-end rtl:justify-start">
-                                            <div class="relative order-2 px-5 py-3 text-gray-700 rounded-lg ltr:rounded-br-none rtl:rounded-bl-none bg-gray-50 dark:bg-zinc-700 dark:text-gray-50">
-                                                <p class="mb-0">
-                                                    Good morning, How are you? What about our next meeting?
-                                                </p>
-                                                <p class="mt-1 mb-0 text-xs text-left text-gray-500 dark:text-gray-300"><i class="align-middle ri-time-line"></i> <span class="align-middle">10:02</span></p>
-                                                <div class="before:content-[''] before:absolute before:border-[5px] before:border-transparent ltr:before:border-r-gray-50 ltr:before:border-t-gray-50 rtl:before:border-l-gray-50 rtl:before:border-t-gray-50 ltr:before:right-0 rtl:before:left-0 before:-bottom-2 ltr:dark:before:border-t-zinc-700 ltr:dark:before:border-r-zinc-700 rtl:dark:before:border-t-zinc-700 rtl:dark:before:border-l-zinc-700"></div>
-                                            </div>
-
-                                            <div class="relative self-start order-1 dropstart">
-                                                <a class="p-0 text-gray-400 border-0 btn dropdown-toggle dark:text-gray-100" href="#" role="button" data-bs-toggle="dropdown" id="dropdownMenuButton13">
-                                                    <i class="ri-more-2-fill"></i>
-                                                </a>
-                                                <div class="absolute z-50 hidden py-2 my-6 text-left list-none bg-white border-none rounded shadow-lg ltr:right-auto ltr:left-0 xl:ltr:right-0 xl:ltr:left-auto rtl:right-0 rtl:left-auto xl:rtl:left-0 xl:rtl:right-auto dropdown-menu w-36 bg-clip-padding dark:bg-zinc-700" aria-labelledby="dropdownMenuButton13">
-                                                    <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Copy <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-file-copy-line"></i></a>
-                                                    <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Save <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-save-line"></i></a>
-                                                    <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Forward <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-chat-forward-line"></i></a>
-                                                    <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Delete <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-delete-bin-line"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="font-medium text-gray-700 rtl:text-left text-14 dark:text-gray-300">Patricia Smith</div>
-                                    </div>
-                                </div>
-                            </li>
-
+                            <!-- Date box -->
                             <li class="clear-both py-4">
                                 <div class="relative mt-3 mb-6 text-center">
                                     <div class="before:content-['] before:absolute before:w-full before:h-[1px] before:left-0 before:right-0 before:bg-gray-50 before:top-[10px] dark:before:bg-zinc-600"></div>
                                     <span class="relative bg-gray-50 text-13 py-[6px] px-3 rounded dark:bg-zinc-600 dark:text-gray-50">Today</span>
                                 </div>
                             </li>
-
+                             <!-- Double request Text box -->
                             <li class="clear-both py-4">
                                 <div class="flex items-end gap-3">
                                     <div>
@@ -2219,7 +2102,7 @@
 
                                 </div>
                             </li>
-
+                             <!-- Response Text box -->
                             <li class="clear-both py-4">
                                 <div class="relative inline-flex items-end mb-6 text-right ltr:rtl:float-left ltr:float-right rtl:float-left">
                                     <div class="order-3 mr-0 ltr:ml-4 rtl:mr-4">
@@ -2248,103 +2131,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="font-medium text-gray-700 rtl:text-left text-14 dark:text-gray-300">Patricia Smith</div>
+                                        <div class="font-medium text-gray-700 rtl:text-left text-14 dark:text-gray-300">{{ username }}</div>
                                     </div>
 
                                 </div>
                             </li>
-
-                            <li class="clear-both py-4">
-                                <div class="flex items-end gap-3">
-                                    <div>
-                                        <img src="assets/images/avatar-4.jpg" alt="" class="rounded-full h-9 w-9">
-                                    </div>
-
-                                    <div>
-                                        <div class="flex gap-2 mb-2">
-
-                                            <div class="relative px-5 py-3 text-white rounded-lg ltr:rounded-bl-none rtl:rounded-br-none group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=red]:bg-red-500">
-                                                <div class="before:content-[''] before:absolute before:border-[5px] before:border-transparent group-data-[theme-color=violet]:ltr:before:border-l-violet-500 group-data-[theme-color=violet]:ltr:before:border-t-violet-500 group-data-[theme-color=green]:ltr:before:border-l-green-500 group-data-[theme-color=green]:ltr:before:border-t-green-500 group-data-[theme-color=red]:ltr:before:border-l-red-500 group-data-[theme-color=red]:ltr:before:border-t-red-500 group-data-[theme-color=violet]:rtl:before:border-r-violet-500 group-data-[theme-color=violet]:rtl:before:border-t-violet-500 group-data-[theme-color=green]:rtl:before:border-r-green-500 group-data-[theme-color=green]:rtl:before:border-t-green-500 group-data-[theme-color=red]:rtl:before:border-r-red-500 group-data-[theme-color=red]:rtl:before:border-t-red-500 ltr:before:left-0 rtl:before:right-0 before:-bottom-2"></div>
-                                                <ul class="relative mb-0">
-                                                    <li class="relative inline-block mr-2">
-                                                        <div>
-                                                            <a class="inline-block m-1 popup-img" href="assets/images/small/img-1.jpg" title="Project 1">
-                                                                <img src="assets/images/img-1.jpg" alt="" class="border rounded h-28">
-                                                            </a>
-                                                        </div>
-                                                        <div class="absolute right-[10px] left-auto bottom-[10px]">
-                                                            <ul>
-                                                                <li class="inline-block p-2">
-                                                                    <a download="img-1.jpg" href="assets/images/small/img-1.jpg" class="font-medium">
-                                                                        <i class="text-lg ri-download-2-line"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="relative self-start inline-block p-2 dropdown">
-                                                                    <a class="p-0 text-gray-400 border-0 btn dropdown-toggle dark:text-gray-100" href="#" role="button" data-bs-toggle="dropdown" id="dropdownMenuButton17">
-                                                                        <i class="text-lg text-white ri-more-2-fill"></i>
-                                                                    </a>
-                                                                    <div class="absolute z-50 hidden w-40 py-2 my-10 text-left list-none bg-white border-none rounded shadow-lg ltr:left-0 ltr:right-auto rtl:right-0 rtl:left-auto dropdown-menu bg-clip-padding dark:bg-zinc-700 dark:border-gray-600/50" aria-labelledby="dropdownMenuButton19">
-                                                                        <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Copy <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-100 ri-file-copy-line"></i></a>
-                                                                        <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Save <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-save-line"></i></a>
-                                                                        <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Forward <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-chat-forward-line"></i></a>
-                                                                        <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Delete <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-delete-bin-line"></i></a>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-
-                                                    <li class="relative inline-block mr-2">
-                                                        <div>
-                                                            <a class="inline-block m-1 popup-img" href="assets/images/small/img-2.jpg" title="Project 2">
-                                                                <img src="assets/images/img-2.jpg" alt="" class="border rounded h-28">
-                                                            </a>
-                                                        </div>
-                                                        <div class="absolute right-[10px] left-auto bottom-[10px]">
-                                                            <ul class="mb-0 list-inline">
-                                                                <li class="inline-block p-2">
-                                                                    <a download="img-2.jpg" href="assets/images/small/img-2.jpg" class="font-medium">
-                                                                        <i class="text-lg ri-download-2-line"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <li class="relative self-start inline-block p-2 dropdown">
-                                                                    <a class="p-0 text-gray-400 border-0 btn dropdown-toggle dark:text-gray-300" href="#" role="button" data-bs-toggle="dropdown" id="dropdownMenuButton18">
-                                                                        <i class="text-lg text-white ri-more-2-fill"></i>
-                                                                    </a>
-                                                                    <div class="absolute z-50 hidden w-40 py-2 my-10 text-left list-none bg-white border-none rounded shadow-lg ltr:left-0 ltr:right-auto rtl:right-0 rtl:left-auto dropdown-menu bg-clip-padding dark:bg-zinc-700 dark:border-gray-600/50" aria-labelledby="dropdownMenuButton19">
-                                                                        <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Copy <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-100 ri-file-copy-line"></i></a>
-                                                                        <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Save <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-save-line"></i></a>
-                                                                        <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Forward <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-chat-forward-line"></i></a>
-                                                                        <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Delete <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-delete-bin-line"></i></a>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                                <p class="mt-1 mb-0 text-xs text-right text-white/50"><i class="align-middle ri-time-line"></i> <span class="align-middle">10:09</span></p>
-                                            </div>
-
-                                            <div class="relative self-start dropdown">
-                                                <a class="p-0 text-gray-400 border-0 btn dropdown-toggle dark:text-gray-300" href="#" role="button" data-bs-toggle="dropdown" id="dropdownMenuButton19">
-                                                    <i class="ri-more-2-fill"></i>
-                                                </a>
-                                                <div class="absolute z-50 hidden w-40 py-2 my-6 text-left list-none bg-white border-none rounded shadow-lg ltr:left-auto ltr:right-0 xl:ltr:left-0 xl:ltr:right-auto rtl:left-0 rtl:right-auto xl:rtl:right-0 xl:rtl:left-auto dropdown-menu bg-clip-padding dark:bg-zinc-700 dark:border-gray-600/50" aria-labelledby="dropdownMenuButton19">
-                                                    <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Copy <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-100 ri-file-copy-line"></i></a>
-                                                    <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Save <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-save-line"></i></a>
-                                                    <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Forward <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-chat-forward-line"></i></a>
-                                                    <a class="block w-full px-4 py-2 text-sm font-normal text-gray-700 bg-transparent dropdown-item whitespace-nowrap hover:bg-gray-100/50 dark:text-gray-100 dark:hover:bg-zinc-600 ltr:text-left rtl:text-right" href="#">Delete <i class="text-gray-500 rtl:float-left ltr:float-right dark:text-gray-200 ri-delete-bin-line"></i></a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="font-medium text-gray-700 text-14 dark:text-gray-300">Doris Brown</div>
-                                    </div>
-
-                                </div>
-                            </li>
-
+                            <!-- Folder/File box -->
                             <li class="clear-both py-4">
                                 <div class="relative inline-flex items-end mb-6 text-right ltr:rtl:float-left ltr:float-right rtl:float-left">
                                     <div class="order-3 mr-0 ltr:ml-4 rtl:mr-4">
@@ -2406,12 +2198,12 @@
 
                                         </div>
 
-                                        <div class="font-medium text-gray-700 rtl:text-left text-14 dark:text-gray-300">Patricia Smith</div>
+                                        <div class="font-medium text-gray-700 rtl:text-left text-14 dark:text-gray-300">{{ username }}</div>
                                     </div>
 
                                 </div>
                             </li>
-
+                            <!-- Typing box -->
                             <li class="clear-both py-4">
                                 <div class="flex items-end gap-3">
                                     <div>
@@ -2443,15 +2235,15 @@
 
                         </ul>
                     </div>
-                    <!-- end chat conversation end -->
+                    <!-- end Conversation -->
 
-                    <!-- start chat input section -->
+                    <!-- start Conversation Input -->
                     <div class="z-40 w-full p-6 mb-0 bg-white border-t lg:mb-1 border-gray-50 dark:bg-zinc-800 dark:border-zinc-700">
 
                         <div class="flex gap-2">
 
                             <div class="flex-grow">
-                                <input type="text" class="w-full border-transparent rounded bg-gray-50 placeholder:text-14 text-14 dark:bg-zinc-700 dark:placeholder:text-gray-300 dark:text-gray-300" placeholder="Enter Message...">
+                                <input type="text" id="ConversationInput" class="w-full border-transparent rounded bg-gray-50 placeholder:text-14 text-14 dark:bg-zinc-700 dark:placeholder:text-gray-300 dark:text-gray-300" placeholder="Enter Message...">
                             </div>
                             <div>
                                 <div>
@@ -2475,7 +2267,7 @@
                                             </button>
                                         </li>
                                         <li class="inline-block">
-                                            <button type="submit" class="text-white border-transparent btn group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=violet]:hover:bg-violet-600 group-data-[theme-color=green]:hover:bg-green-600">
+                                            <button type="submit" id="BtnSend" class="text-white border-transparent btn group-data-[theme-color=violet]:bg-violet-500 group-data-[theme-color=green]:bg-green-500 group-data-[theme-color=red]:bg-red-500 group-data-[theme-color=violet]:hover:bg-violet-600 group-data-[theme-color=green]:hover:bg-green-600">
                                                 <i class="ri-send-plane-2-fill"></i>
                                             </button>
                                         </li>
@@ -2488,7 +2280,7 @@
                     <!-- end chat input section -->
 
                 </div>
-                <!-- end chat conversation section -->
+                <!-- end Chat Header -->
 
 
                 <!-- start User profile detail sidebar -->
@@ -2739,5 +2531,12 @@
         <!-- End User chat -->
     </div>
 
+
+     <!-- SocketIO JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static',filename='js/socketio.js') }}"></script>
+    <script>
+        const username = `{{ username }}`;
+    </script>
 
 {% endblock %}

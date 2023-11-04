@@ -50445,6 +50445,7 @@ h6 {
     display: none !important
 }
 
+
 .h-1 {
     height: .25rem !important
 }
@@ -53395,6 +53396,7 @@ input:checked ~ .dot {
         padding-left: .625rem
     }
 
+
     @media (min-width: 100%) {
         .sm\:container {
             max-width: 100%
@@ -54732,5 +54734,11 @@ input:checked ~ .dot {
 
     :is([dir=rtl] .xl\:rtl\:right-auto) {
         right: auto !important
+    }
+}
+@media (min-width: 960px) {
+
+    .lg\:max-h-screen {
+        height: 100vh !important
     }
 }
