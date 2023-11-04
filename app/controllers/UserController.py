@@ -1,20 +1,28 @@
 from flask import redirect, url_for, render_template, flash, session
 from app.models.User import User
-from app import db
+from app import db, login_manager
+from flask_login import login_user, logout_user, current_user
+
+
+@login_manager.user_loader
+def LoadUser(user_id):
+    return User.query.get(int(user_id))
+
 
 def LoginController(form):
     username = form.username.data
     password = form.password.data
+    remember = form.remember.data
 
     user = User.query.filter_by(username=username).first()
-    if user and user.check_password(user, password):
-        # Authentication succeeded, return a redirect response
-        session['user_id'] = user.id
-        return redirect(url_for('index'))
+    login_user(user, remember=remember)  # Pass user_object to load the user into the session
+    if current_user.is_authenticated:
+        flash('User logged in successfully', 'success')
+        return redirect(url_for('chat'))
     else:
-        # Authentication failed, return a rendered template with an error message
         flash('Invalid credentials', 'error')
         return render_template('login.html', form=form)
+
 
 def RegisterController(form):
     username = form.username.data
@@ -33,5 +41,4 @@ def RegisterController(form):
     user.save()
 
     flash('User successfully registered', 'success')
-    return redirect(url_for('index'))
-
+    return redirect(url_for('chat'))

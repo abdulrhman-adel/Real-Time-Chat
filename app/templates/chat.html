@@ -4,6 +4,13 @@
 
 {% block content %}
 <body>
+                                {% with messages = get_flashed_messages(with_categories=true) %}
+                                  {% if messages %}
+                                      {% for category, message in messages %}
+                                          <span style="color: red;">[{{ message }}] [{{ category }}]</span>
+                                      {% endfor %}
+                                  {% endif %}
+                                {% endwith %}
     <div class="lg:flex">
         <!-- Start left sidebar-menu -->
         <div class="sidebar-menu w-full lg:w-[75px] shadow lg:flex lg:flex-col flex flex-row justify-between items-center fixed lg:relative z-40 bottom-0 bg-white dark:bg-zinc-600 ">
@@ -1907,6 +1914,8 @@
 
         <!-- Start User chat -->
         <div class="w-full overflow-hidden transition-all duration-150 bg-white user-chat dark:bg-zinc-800">
+
+
             <div class="lg:flex">
                 <!-- start chat conversation section -->
 

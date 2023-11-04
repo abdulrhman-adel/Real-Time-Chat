@@ -1,7 +1,9 @@
 from app import db
 from app import bcrypt
+from flask_login import UserMixin
 
-class User(db.Model):
+
+class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), unique=True, nullable=False)
@@ -10,10 +12,8 @@ class User(db.Model):
 
     def set_password(self, pwd):
         # Hash the password using bcrypt
-        password =  bcrypt.generate_password_hash(pwd).decode('utf-8')
+        password = bcrypt.generate_password_hash(pwd).decode('utf-8')
         self.password = password
-
-
 
     def check_password(self, user, pwd):
         # Check if the provided password matches the hashed password
@@ -30,4 +30,3 @@ class User(db.Model):
         # Check if the table exists, and if not, create it
         if not db.engine.dialect.has_table(db.engine, cls.__tablename__):
             cls.__table__.create(db.engine)
-
